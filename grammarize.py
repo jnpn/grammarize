@@ -11,14 +11,6 @@ def flatten(l):
             r.extend(flatten(e))
     return r
 
-def flatten(l):
-    """
-    case x:xs of
-     atom x -> 
-     list x -> 
-     _      -> 
-    """
-
 # flatten([])      -> []
 # flatten([1])     -> [1]
 # flatten([1 2])   -> [1 2]
@@ -34,9 +26,6 @@ def flatmap(f,l):
 
 def Tree(v,l=None,r=None):
     return (v, l, r)
-
-# def Tree(v,l=None,r=None):
-#     return [v, l, r]
 
 def Leaf(v):
     return Tree(v)
@@ -66,7 +55,6 @@ t1 = Tree('body',
                            Tree('duh'),
                            Tree('eww'))))
 
-
 t2 = Tree('body',
           Tree('ldiv'),
           Tree('rdiv',
@@ -76,7 +64,6 @@ t2 = Tree('body',
                Tree('rwat',
                     Tree('rduh'),
                     Tree('reww'))))
-
 
 t3 = Tree('body',
           Tree('pre'),
@@ -98,44 +85,20 @@ def TreeWalk(t):
         return [t]
     # case tree -> [Tree]
     else:
-        # t (+) walk left (+) walk righto
+        # t (+) walk left (+) walk right
         return [t] + TreeWalk(TreeLeft(t)) + TreeWalk(TreeRight(t))
-
-        # Old dead code
-        # 
-        # r = [t]
-        # r.append(TreeWalk(TreeLeft(t)))
-        # r.append(TreeWalk(TreeRight(t)))
-        # return r
-
 
 def wrappend(l,v):
     c = l.copy()
     c.append(v)
     return c
-    
-# def TreeChildrenNames(tree):
-#     if TreeIsLeaf(tree):
-#         return None
-#     else:
-#         children = TreeChildren(tree)
-#         nodename = lambda t: TreeNode(t)
-#         return list(map(nodename, children))
 
 def TreeRules_(tree):
     return list((TreeNode(t),TreeChildrenNames(t))
                 for t in TreeWalk(tree)
                 if not TreeIsLeaf(t))
 
-# from collection import Counter
-
-from functools import reduce
 from itertools import groupby
-
-# def inmap(l,e):
-#     """group l elems by key extracted using function e"""
-#     m = {}
-#     return reduce(lambda a,b: a[e(b)['key']].append(e(b)['val']), l)
 
 def TreeRules__(tree):
     # clean: [(tag, [subtag])] -> Union [subtag]
@@ -151,9 +114,3 @@ def TreeRules(tree):
 # Tree -{treewalk}-> [(Node, Children)] -{merge}-> [(Node, Children)]'
 #
 # merge [(n,c0), (n, c1), ...] -> [(n, (union c0 c1))]
-
-def wat(tree):
-    """ tree -> [(node, children)]"""
-    def children(tree):
-        return TreeChildren(tree)
-    return flatmap(children, tree)
