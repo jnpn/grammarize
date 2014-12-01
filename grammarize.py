@@ -106,21 +106,30 @@ def wrappend(l,v):
 
 class Gree(Tree):
 
-    from itertools import groupby
-
     def rules_(self):
-        return list((self.node(),TreeChildrenNames(t)) # ???
+        return list((t.node(),t.children_names()) # ???
                     for t in self.walk()
-                    if not self.isleaf())
+                    if not t.isleaf())
 
     def rules__(self):
         # clean: [(tag, [subtag])] -> Union [subtag]
         def clean(l):
             return set(flatten([s for e,s in l]))
-        return list((p, clean(cs)) for p,cs in groupby(self.rules_(), self.node))
+        parent_name = lambda t: t[0]
+        return list((p, clean(cs)) for p,cs in groupby(self.rules_(), parent_name))
 
     def rules(self):
         return dict(self.rules__())
+
+g3 = Gree('body',
+          Gree('pre'),
+          Gree('div',
+               Gree('p',
+                    Gree('h1'),
+                    Gree('span')),
+               Gree('p',
+                    Gree('h2'),
+                    Gree('a'))))
 
 # grammarize Tree -> Grammar
 #
