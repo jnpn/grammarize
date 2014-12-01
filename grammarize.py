@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from functools import partial
+from itertools import groupby
 
 def flatten(l):
     r = []
@@ -75,7 +75,6 @@ t3 = Tree('body',
                     Tree('h2'),
                     Tree('a'))))
 
-
 def TreeWalk(t):
     """Tree -> [Tree]
     TOFIX: fails on non binary trees
@@ -88,17 +87,10 @@ def TreeWalk(t):
         # t (+) walk left (+) walk right
         return [t] + TreeWalk(TreeLeft(t)) + TreeWalk(TreeRight(t))
 
-def wrappend(l,v):
-    c = l.copy()
-    c.append(v)
-    return c
-
 def TreeRules_(tree):
     return list((TreeNode(t),TreeChildrenNames(t))
                 for t in TreeWalk(tree)
                 if not TreeIsLeaf(t))
-
-from itertools import groupby
 
 def TreeRules__(tree):
     # clean: [(tag, [subtag])] -> Union [subtag]
