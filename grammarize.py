@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from functools import partial
+from itertools import groupby
 
 def flatten(l):
     r = []
