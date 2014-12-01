@@ -24,26 +24,45 @@ def flatmap(f,l):
 # tree a -> (value a, left tree, right tree)
 # t = (1 (2 None None) None)
 
-def Tree(v,l=None,r=None):
-    return (v, l, r)
+class Tree:
 
-def Leaf(v):
-    return Tree(v)
+    def __init__(self, n, l=None, r=None):
+        self.n = n
+        self.l = l
+        self.r = r
 
-def TreeNode(t):
-    return t[0]
+    def node(self):
+        return self.n
 
-def TreeLeft(t):
-    return t[1]
+    def left(self):
+        return self.l
 
-def TreeRight(t):
-    return t[2]
+    def right(self):
+        return self.r
 
-def TreeIsLeaf(t):
-    return TreeLeft(t) is None and TreeRight(t) is None
+    def isleaf(self):
+        return self.left() is None and self.right() is None
 
-def TreeChildren(t):
-    return [TreeLeft(t), TreeRight(t)]
+    def children(self):
+        return [self.left(), self.right()]
+
+    def __repr__(self):
+        if self.isleaf():
+            return '(Leaf %s)' % (self.node())
+        else:
+            return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
+    
+    def walk(self):
+        """Tree -> [Tree]
+        TOFIX: fails on non binary trees
+        """
+        # case leaf -> [Tree]
+        if self.isleaf():
+            return [self]
+        # case tree -> [Tree]
+        else:
+            # t (+) walk left (+) walk right
+            return [self] + self.left().walk() + self.right().walk()
 
 t0 = Tree('body',
           Tree('div'),
@@ -76,38 +95,28 @@ t3 = Tree('body',
                     Tree('a'))))
 
 
-def TreeWalk(t):
-    """Tree -> [Tree]
-    TOFIX: fails on non binary trees
-    """
-    # case leaf -> [Tree]
-    if TreeIsLeaf(t):
-        return [t]
-    # case tree -> [Tree]
-    else:
-        # t (+) walk left (+) walk right
-        return [t] + TreeWalk(TreeLeft(t)) + TreeWalk(TreeRight(t))
-
 def wrappend(l,v):
     c = l.copy()
     c.append(v)
     return c
 
-def TreeRules_(tree):
-    return list((TreeNode(t),TreeChildrenNames(t))
-                for t in TreeWalk(tree)
-                if not TreeIsLeaf(t))
+class Gree(Tree):
 
-from itertools import groupby
+    from itertools import groupby
 
-def TreeRules__(tree):
-    # clean: [(tag, [subtag])] -> Union [subtag]
-    def clean(l):
-        return set(flatten([s for e,s in l]))
-    return list((p, clean(cs)) for p,cs in groupby(TreeRules_(tree), TreeNode))
+    def rules_(self):
+        return list((self.node(),TreeChildrenNames(t)) # ???
+                    for t in self.walk()
+                    if not self.isleaf())
 
-def TreeRules(tree):
-    return dict(TreeRules__(tree))
+    def rules__(self):
+        # clean: [(tag, [subtag])] -> Union [subtag]
+        def clean(l):
+            return set(flatten([s for e,s in l]))
+        return list((p, clean(cs)) for p,cs in groupby(self.rules_(), self.node))
+
+    def rules(self):
+        return dict(self.rules__())
 
 # grammarize Tree -> Grammar
 #
