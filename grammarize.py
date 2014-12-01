@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from functools import partial
 from itertools import groupby
 
 def flatten(l):
@@ -18,9 +17,6 @@ def flatten(l):
 # flatten([[1]])   -> [1]
 # flatten([[1] 2]) -> [1 2]
 # flatten([1 [2]]) -> [1 2]
-
-def flatmap(f,l):
-    return flatten(map(f,l))
 
 # tree a -> (value a, left tree, right tree)
 # t = (1 (2 None None) None)
@@ -98,16 +94,10 @@ t3 = Tree('body',
                     Tree('h2'),
                     Tree('a'))))
 
-
-def wrappend(l,v):
-    c = l.copy()
-    c.append(v)
-    return c
-
 class Gree(Tree):
 
     def rules_(self):
-        return list((t.node(),t.children_names()) # ???
+        return list((t.node(),t.children_names())
                     for t in self.walk()
                     if not t.isleaf())
 
