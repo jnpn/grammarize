@@ -47,6 +47,9 @@ class Tree:
     def children(self):
         return [self.left(), self.right()]
 
+    def children_names(self):
+        return list(map(lambda c: c.node(),self.children()))
+
     def __repr__(self):
         if self.isleaf():
             return '(Leaf %s)' % (self.node())
