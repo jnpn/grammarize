@@ -73,36 +73,6 @@ class Tree:
         mayberight  = self.mayli(self.right(), walkify)
         return [self] + maybeleft + mayberight
 
-t0 = Tree('body',
-          Tree('div'),
-          Tree('div'))
-
-t1 = Tree('body',
-          Tree('div'),
-          Tree('div', Tree('wat',
-                           Tree('duh'),
-                           Tree('eww'))))
-
-t2 = Tree('body',
-          Tree('ldiv'),
-          Tree('rdiv',
-               Tree('lwat',
-                    Tree('lduh'),
-                    Tree('leww')),
-               Tree('rwat',
-                    Tree('rduh'),
-                    Tree('reww'))))
-
-t3 = Tree('body',
-          Tree('pre'),
-          Tree('div',
-               Tree('p',
-                    Tree('h1'),
-                    Tree('span')),
-               Tree('p',
-                    Tree('h2'),
-                    Tree('a'))))
-
 class Gree(Tree):
 
     def rules_(self):
@@ -119,6 +89,38 @@ class Gree(Tree):
 
     def rules(self):
         return dict(self.rules__())
+
+### Tests
+
+t0 = Gree('body',
+          Gree('div'),
+          Gree('div'))
+
+t1 = Gree('body',
+          Gree('div'),
+          Gree('div', Gree('wat',
+                           Gree('duh'),
+                           Gree('eww'))))
+
+t2 = Gree('body',
+          Gree('ldiv'),
+          Gree('rdiv',
+               Gree('lwat',
+                    Gree('lduh'),
+                    Gree('leww')),
+               Gree('rwat',
+                    Gree('rduh'),
+                    Gree('reww'))))
+
+t3 = Gree('body',
+          Gree('pre'),
+          Gree('div',
+               Gree('p',
+                    Gree('h1'),
+                    Gree('span')),
+               Gree('p',
+                    Gree('h2'),
+                    Gree('a'))))
 
 g3 = Gree('body',
           Gree('pre'),
