@@ -25,23 +25,20 @@ class Tree:
     def isleaf(self):
         return self.left() is None and self.right() is None
 
-    def children(self):
-        return [self.left(), self.right()]
-
     def maybe(self,v,f,p,d):
         return f(v) if p(v) else d
 
     def mayli(self,v,f):
         return self.maybe(v, f, lambda v: v is not None, [])
 
-    def mhildren(self):
+    def children(self):
         listify = lambda e: [e]
         maybeleft  = self.mayli(self.left(), listify)
         mayberight  = self.mayli(self.right(), listify)
         return [] + maybeleft + mayberight
 
     def children_names(self):
-        return [c.node() for c in self.mhildren()]
+        return [c.node() for c in self.children()]
 
     def __repr__(self):
         if self.isleaf():
