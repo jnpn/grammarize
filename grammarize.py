@@ -3,10 +3,11 @@
 from itertools import groupby
 from prelude import flatten
 
-# tree a -> (value a, left tree, right tree)
-# t = (1 (2 None None) None)
-
 class Tree:
+    """
+    tree a -> (value a, left tree, right tree)
+    t = (1 (2 None None) None)
+    """
 
     def __init__(self, n, l=None, r=None):
         self.n = n
@@ -120,3 +121,12 @@ g3 = Gree('body',
                Gree('p',
                     Gree('h2'),
                     Gree('a'))))
+
+### Main
+
+if __name__ == "__main__":
+    from pprint import pprint as pp
+    print('Source')
+    pp(g3)
+    print('Grammar')
+    pp(g3.rules())
