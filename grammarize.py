@@ -54,9 +54,8 @@ class Tree:
         """
 
         walkify    = lambda e: e.walk()
-        maybeleft  = self.mayli(self.left(), walkify)
-        mayberight = self.mayli(self.right(), walkify)
-        return [self] + maybeleft + mayberight
+        maywalk    = lambda s: self.mayli(s, walkify)
+        return [self] + maywalk(self.left()) + maywalk(self.right())
 
 class Gree(Tree):
     """
