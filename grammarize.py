@@ -32,9 +32,9 @@ class Tree:
         return self.maybe(v, f, lambda v: v is not None, [])
 
     def children(self):
-        listify = lambda e: [e]
+        listify    = lambda e: [e]
         maybeleft  = self.mayli(self.left(), listify)
-        mayberight  = self.mayli(self.right(), listify)
+        mayberight = self.mayli(self.right(), listify)
         return [] + maybeleft + mayberight
 
     def children_names(self):
@@ -50,12 +50,19 @@ class Tree:
         """Tree -> [Tree]
         """
         # t (+) default walk left (+) default walk right
-        walkify = lambda e: e.walk()
+        walkify    = lambda e: e.walk()
         maybeleft  = self.mayli(self.left(), walkify)
-        mayberight  = self.mayli(self.right(), walkify)
+        mayberight = self.mayli(self.right(), walkify)
         return [self] + maybeleft + mayberight
 
 class Gree(Tree):
+    """
+    Grammarize Tree -> Grammar
+    
+    Tree -{treewalk}-> [(Node, Children)] -{merge}-> [(Node, Children)]'
+    
+    merge [(n,c0), (n, c1), ...] -> [(n, (union c0 c1))]
+    """
 
     def rules_(self):
         return list((t.node(),t.children_names())
@@ -113,9 +120,3 @@ g3 = Gree('body',
                Gree('p',
                     Gree('h2'),
                     Gree('a'))))
-
-# grammarize Tree -> Grammar
-#
-# Tree -{treewalk}-> [(Node, Children)] -{merge}-> [(Node, Children)]'
-#
-# merge [(n,c0), (n, c1), ...] -> [(n, (union c0 c1))]
