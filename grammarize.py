@@ -48,9 +48,11 @@ class Tree:
             return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
     
     def walk(self):
-        """Tree -> [Tree]
         """
-        # t (+) default walk left (+) default walk right
+        Tree -> [Tree]
+        t (+) default walk left (+) default walk right
+        """
+
         walkify    = lambda e: e.walk()
         maybeleft  = self.mayli(self.left(), walkify)
         mayberight = self.mayli(self.right(), walkify)
@@ -69,8 +71,8 @@ class Gree(Tree):
         return [(t.node(),t.children_names()) for t in self.walk() if not t.isleaf()]
 
     def rules__(self):
-        # clean: [(tag, [subtag])] -> Union [subtag]
         def clean(l):
+            """[(tag, [subtag])] -> Union [subtag]"""
             return set(flatten([s for e,s in l]))
         parent_name = lambda t: t[0]
         return [(p, clean(cs)) for p,cs in groupby(self.rules_(), parent_name)]
