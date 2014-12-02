@@ -66,16 +66,14 @@ class Gree(Tree):
     """
 
     def rules_(self):
-        return list((t.node(),t.children_names())
-                    for t in self.walk()
-                    if not t.isleaf())
+        return [(t.node(),t.children_names()) for t in self.walk() if not t.isleaf()]
 
     def rules__(self):
         # clean: [(tag, [subtag])] -> Union [subtag]
         def clean(l):
             return set(flatten([s for e,s in l]))
         parent_name = lambda t: t[0]
-        return list((p, clean(cs)) for p,cs in groupby(self.rules_(), parent_name))
+        return [(p, clean(cs)) for p,cs in groupby(self.rules_(), parent_name)]
 
     def rules(self):
         return dict(self.rules__())
