@@ -43,8 +43,14 @@ class Tree:
     def children(self):
         return [self.left(), self.right()]
 
+    def mhildren(self):
+        maybeleft  = [self.left()]  if self.left()  is not None else []
+        mayberight = [self.right()] if self.right() is not None else []
+
+        return [] + maybeleft + mayberight
+
     def children_names(self):
-        return [c.node() for c in self.children()]
+        return [c.node() for c in self.mhildren()]
 
     def __repr__(self):
         if self.isleaf():
@@ -62,7 +68,9 @@ class Tree:
         # case tree -> [Tree]
         else:
             # t (+) walk left (+) walk right
-            return [self] + self.left().walk() + self.right().walk()
+            maybeleft  = (self.left().walk()  if self.left()  is not None else [])
+            mayberight = (self.right().walk() if self.right() is not None else [])
+            return [self] + maybeleft + mayberight
 
 t0 = Tree('body',
           Tree('div'),
