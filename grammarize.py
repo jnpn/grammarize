@@ -43,10 +43,16 @@ class Tree:
     def children(self):
         return [self.left(), self.right()]
 
-    def mhildren(self):
-        maybeleft  = [self.left()]  if self.left()  is not None else []
-        mayberight = [self.right()] if self.right() is not None else []
+    def maybe(self,v,f,p,d):
+        return f(v) if p(v) else d
 
+    def mayli(self,v,f):
+        return self.maybe(v, f, lambda v: v is not None, [])
+
+    def mhildren(self):
+        listify = lambda e: [e]
+        maybeleft  = self.mayli(self.left(), listify)
+        mayberight  = self.mayli(self.right(), listify)
         return [] + maybeleft + mayberight
 
     def children_names(self):
@@ -62,8 +68,9 @@ class Tree:
         """Tree -> [Tree]
         """
         # t (+) default walk left (+) default walk right
-        maybeleft  = (self.left().walk()  if self.left()  is not None else [])
-        mayberight = (self.right().walk() if self.right() is not None else [])
+        walkify = lambda e: e.walk()
+        maybeleft  = self.mayli(self.left(), walkify)
+        mayberight  = self.mayli(self.right(), walkify)
         return [self] + maybeleft + mayberight
 
 t0 = Tree('body',
