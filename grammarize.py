@@ -60,17 +60,11 @@ class Tree:
     
     def walk(self):
         """Tree -> [Tree]
-        TOFIX: fails on non binary trees
         """
-        # case leaf -> [Tree]
-        if self.isleaf():
-            return [self]
-        # case tree -> [Tree]
-        else:
-            # t (+) walk left (+) walk right
-            maybeleft  = (self.left().walk()  if self.left()  is not None else [])
-            mayberight = (self.right().walk() if self.right() is not None else [])
-            return [self] + maybeleft + mayberight
+        # t (+) default walk left (+) default walk right
+        maybeleft  = (self.left().walk()  if self.left()  is not None else [])
+        mayberight = (self.right().walk() if self.right() is not None else [])
+        return [self] + maybeleft + mayberight
 
 t0 = Tree('body',
           Tree('div'),
