@@ -125,7 +125,6 @@ g3 = Gree('body',
 
 if __name__ == "__main__":
     from pprint import pprint as pp
-    print('Source')
-    pp(g3)
-    print('Grammar')
-    pp(g3.rules())
+    for t in [t0,t1,t2,t3,g3]:
+        print('@Source'.ljust(8),  t)
+        print('@Grammar'.ljust(8), t.rules())
