@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from itertools import groupby
-from prelude import flatten
+from prelude import flatten, isnt
 
 class Tree:
     """
@@ -30,7 +30,7 @@ class Tree:
         return f(v) if p(v) else d
 
     def mayli(self,v,f):
-        return self.maybe(v, f, lambda v: v is not None, [])
+        return self.maybe(v, f, isnt(None), [])
 
     def children(self):
         listify    = lambda e: [e]
