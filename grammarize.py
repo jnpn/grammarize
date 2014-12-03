@@ -79,6 +79,16 @@ class Gree(Tree):
     def rules(self):
         return dict(self.rules__())
 
+    def bnf(self):
+        symbolify   = lambda    s: '<%s>' % s
+        disjonctify = lambda    l: ' | '.join(l)
+        equallify   = lambda a, b: " ::= ".join([a,b])
+        nl          = "\n"
+        # return {symbolify(p): disjonctify(map(symbolify,cs)) for p,cs in self.rules().items()}
+        return nl.join([equallify(symbolify(p),disjonctify(map(symbolify,cs)))
+                        for p,cs
+                        in self.rules().items()])
+
 ### Tests
 
 t0 = Gree('body',
@@ -125,6 +135,8 @@ g3 = Gree('body',
 
 if __name__ == "__main__":
     from pprint import pprint as pp
-    for t in [t0,t1,t2,t3,g3]:
-        print('@Source'.ljust(8),  t)
-        print('@Grammar'.ljust(8), t.rules())
+    for tree in [t0,t1,t2,t3,g3]:
+        print('@Source')
+        print(tree)
+        print('@Grammar')
+        print(tree.bnf())
