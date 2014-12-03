@@ -45,7 +45,9 @@ class Tree:
         if self.isleaf():
             return '(Leaf %s)' % (self.node())
         else:
-            return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
+            return '(Tree %s %s %s)' % (self.node(), 
+                                        self.left() if self.left() is not None else "", 
+                                        self.right() if self.right() is not None else "")
     
     def walk(self):
         """
