@@ -17,3 +17,6 @@ def flatten(l):
 # flatten([[1]])   -> [1]
 # flatten([[1] 2]) -> [1 2]
 # flatten([1 [2]]) -> [1 2]
+
+def isnt(x):
+    return lambda y: y is not x
