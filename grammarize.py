@@ -52,10 +52,12 @@ class Tree:
         Tree -> [Tree]
         t (+) default walk left (+) default walk right
         """
-
-        walkify    = lambda e: e.walk()
-        maywalk    = lambda s: self.mayli(s, walkify)
-        return [self] + maywalk(self.left()) + maywalk(self.right())
+        theres = isnt(None)
+        if theres(self.left()):
+            yield from self.left().walk()
+        yield self
+        if theres(self.right()):
+            yield from self.right().walk()
 
 class Gree(Tree):
     """
