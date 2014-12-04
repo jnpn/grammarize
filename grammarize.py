@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-from itertools import groupby
+from itertools import groupby, cycle
 from prelude import flatten, isnt
+from math import floor
+from random import random
 
 class Tree:
     """
@@ -96,6 +98,82 @@ class Gree(Tree):
                         for p,cs
                         in self.rules().items()])
 
+class IRandomTree(object):
+    """Random tree generator, with some constraints.
+         - T stream of tags, fixed iterable or generator
+       ```
+       if (d > 0):
+         d' = d - 1
+         gen(T, d) -> Tree(next T, gen T d', gen T d') 
+       else:
+         gen(T, d) -> None
+       ```
+    """
+
+    def __init__(self, depth=18):
+        """
+        
+        Arguments:
+        - `depth`: maximum depth of the generated tree
+        """
+        self._depth = depth
+
+    def generate(self):
+        """
+        """
+        pass
+
+class RandomTree(IRandomTree):
+    """
+    """
+
+    def __init__(self, ):
+        """
+        """
+        super()
+        self.tags = cycle(["a", "pre",
+                           "div", "span",
+                           "h1", "h2",
+                           "h3", "code",
+                           "img", "audio",
+                           "video", "script"])
+        
+    def generate(self, d):
+        """
+        """
+        t = next(self.tags)
+        if (d > 0):
+            dn = d - 1
+            return Gree(t, self.generate(dn), self.generate(dn))
+        else:
+            return None
+
+### IRandomTree Tests 
+
+# >>> r0.generate(10)
+# (Tree a (Tree pre (Tree div (Tree span (Tree h1 (Tree h2 (Tree h3 (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code))) (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video)))) (Tree pre (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div))) (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))))) (Tree img (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre)))) (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))))) (Tree script (Tree a (Tree pre (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div))) (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2)))) (Tree img (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio))) (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))))) (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))))))) (Tree h3 (Tree code (Tree img (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre)))) (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))))) (Tree script (Tree a (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))) (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1)))) (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))))) (Tree div (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))))) (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))))))) (Tree audio (Tree video (Tree script (Tree a (Tree pre (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div))) (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2)))) (Tree img (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio))) (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))))) (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span)))))) (Tree h3 (Tree code (Tree img (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio))) (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a)))) (Tree span (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1))) (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code))))) (Tree video (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span)))) (Tree h3 (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code))) (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))))))) (Tree pre (Tree div (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))))) (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))))) (Tree audio (Tree video (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span)))) (Tree h3 (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code))) (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))))) (Tree pre (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))) (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))))))))) (Tree h1 (Tree h2 (Tree h3 (Tree code (Tree img (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre)))) (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))))) (Tree script (Tree a (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))) (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1)))) (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))))) (Tree div (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))))) (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))))))) (Tree audio (Tree video (Tree script (Tree a (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))) (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1)))) (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script))))) (Tree div (Tree span (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1))) (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code)))) (Tree video (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script))) (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div)))))) (Tree h2 (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))))) (Tree audio (Tree video (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script))) (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div)))) (Tree h2 (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))) (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio)))))))) (Tree a (Tree pre (Tree div (Tree span (Tree h1 (Tree h2 (Tree h3 (Leaf code) (Leaf video)) (Tree pre (Leaf div) (Leaf h2))) (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img)))) (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))))) (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))))) (Tree audio (Tree video (Tree script (Tree a (Tree pre (Leaf div) (Leaf h2)) (Tree img (Leaf audio) (Leaf a))) (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span)))) (Tree h3 (Tree code (Tree img (Leaf audio) (Leaf a)) (Tree span (Leaf h1) (Leaf code))) (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))))) (Tree pre (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))) (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))))))) (Tree h1 (Tree h2 (Tree h3 (Tree code (Tree img (Tree audio (Leaf video) (Leaf pre)) (Tree h1 (Leaf h2) (Leaf img))) (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script)))) (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))))) (Tree audio (Tree video (Tree script (Tree a (Leaf pre) (Leaf h1)) (Tree code (Leaf img) (Leaf script))) (Tree div (Tree span (Leaf h1) (Leaf code)) (Tree video (Leaf script) (Leaf div)))) (Tree h2 (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))) (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio)))))) (Tree a (Tree pre (Tree div (Tree span (Tree h1 (Leaf h2) (Leaf img)) (Tree script (Leaf a) (Leaf span))) (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3)))) (Tree audio (Tree video (Tree script (Leaf a) (Leaf span)) (Tree h3 (Leaf code) (Leaf video))) (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))))) (Tree h1 (Tree h2 (Tree h3 (Tree code (Leaf img) (Leaf script)) (Tree div (Leaf span) (Leaf h3))) (Tree audio (Tree video (Leaf script) (Leaf div)) (Tree h2 (Leaf h3) (Leaf audio)))) (Tree a (Tree pre (Tree div (Leaf span) (Leaf h3)) (Tree audio (Leaf video) (Leaf pre))) (Tree h1 (Tree h2 (Leaf h3) (Leaf audio)) (Tree a (Leaf pre) (Leaf h1))))))))))
+
+tags = ["a", "pre", "div", "span",
+        "h1", "h2", "h3", "code",
+        "img", "audio", "video", "script"]
+
+def testshuffler():
+    stop = 10
+    for t in shuffler(tags):
+        print(t)
+        if stop == 0:
+            break
+        else:
+            stop = stop - 1
+
+def test_shuffler_2():
+    count = 5                   # number of trees
+    depth = 10                  # trees of depth <= 10
+    trees = [RandomTree().generate(depth) for i in range(count)]
+    for num,tree in enumerate(trees):
+        print("Tree",num)
+        print(tree.bnf())
+        
 ### Tests
 
 t0 = Gree('body',
@@ -147,3 +225,5 @@ if __name__ == "__main__":
         print(tree)
         print('@Grammar')
         print(tree.bnf())
+
+    test_shuffler_2()
