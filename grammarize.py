@@ -68,6 +68,10 @@ class Gree(Tree):
     Tree -{treewalk}-> [(Node, Children)] -{merge}-> [(Node, Children)]'
     
     merge [(n,c0), (n, c1), ...] -> [(n, (union c0 c1))]
+
+    TODO:
+
+      - order rules by depth of first appearance
     """
 
     def rules_(self):
@@ -108,6 +112,10 @@ class IRandomTree(object):
        else:
          gen(T, d) -> None
        ```
+
+    TODO:
+
+      - different way to pick tags (probabilities, markovian rules ...)
     """
 
     def __init__(self, depth=18):
