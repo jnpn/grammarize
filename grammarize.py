@@ -53,9 +53,9 @@ class Tree:
         t (+) default walk left (+) default walk right
         """
         theres = isnt(None)
-        yield self
         if theres(self.left()):
             yield from self.left().walk()
+        yield self
         if theres(self.right()):
             yield from self.right().walk()
 
@@ -76,11 +76,12 @@ class Gree(Tree):
             """[(tag, [subtag])] -> Union [subtag]"""
             return set(flatten([s for e,s in l]))
         parent_name = lambda t: t[0]
-        # @WARNING: groupby is order sensitive
+        # @INFO: groupby is order sensitive
         # groupby a e b e != groupby a b e e
-        # Tree.walk traversal order matters
-        # might need to sort rules_ using parent_name as key
-        return [(p, clean(cs)) for p,cs in groupby(self.rules_(), parent_name)]
+        # Tree.walk traversal order exposed
+        # the need for sorting
+        sr = sorted(self.rules_(), key=parent_name)
+        return [(p, clean(cs)) for p,cs in groupby(sr, parent_name)]
 
     def rules(self):
         return dict(self.rules__())
