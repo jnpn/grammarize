@@ -20,3 +20,11 @@ def flatten(l):
 
 def isnt(x):
     return lambda y: y is not x
+
+def take(g,n):
+    return [next(g) for i in range(n)]
+
+def shuffler(a):
+    n = len(a)
+    while True:
+        yield a[math.floor(random()*n-1)]
