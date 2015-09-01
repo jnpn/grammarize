@@ -2,8 +2,7 @@
 
 from itertools import groupby, cycle
 from prelude import flatten, isnt
-from math import floor
-from random import random
+
 
 class Tree:
     """
@@ -28,15 +27,15 @@ class Tree:
     def isleaf(self):
         return self.left() is None and self.right() is None
 
-    def maybe(self,v,f,p,d):
+    def maybe(self, v, f, p, d):
         return f(v) if p(v) else d
 
-    def mayli(self,v,f):
+    def mayli(self, v, f):
         return self.maybe(v, f, isnt(None), [])
 
     def children(self):
-        listify    = lambda e: [e]
-        maybeleft  = self.mayli(self.left(), listify)
+        listify = lambda e: [e]
+        maybeleft = self.mayli(self.left(), listify)
         mayberight = self.mayli(self.right(), listify)
         return [] + maybeleft + mayberight
 
@@ -48,7 +47,7 @@ class Tree:
             return '(Leaf %s)' % (self.node())
         else:
             return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
-    
+
     def walk(self):
         """
         Tree -> [Tree]
@@ -61,12 +60,13 @@ class Tree:
         if theres(self.right()):
             yield from self.right().walk()
 
+
 class Gree(Tree):
     """
     Grammarize Tree -> Grammar
-    
+
     Tree -{treewalk}-> [(Node, Children)] -{merge}-> [(Node, Children)]'
-    
+
     merge [(n,c0), (n, c1), ...] -> [(n, (union c0 c1))]
 
     TODO:
@@ -75,32 +75,36 @@ class Gree(Tree):
     """
 
     def rules_(self):
-        return [(t.node(),t.children_names()) for t in self.walk() if not t.isleaf()]
+        return [(t.node(), t.children_names())
+                for t in self.walk()
+                if not t.isleaf()]
 
     def rules__(self):
         def clean(l):
             """[(tag, [subtag])] -> Union [subtag]"""
-            return set(flatten([s for e,s in l]))
+            return set(flatten([s for e, s in l]))
         parent_name = lambda t: t[0]
         # @INFO: groupby is order sensitive
         # groupby a e b e != groupby a b e e
         # Tree.walk traversal order exposed
         # the need for sorting
         sr = sorted(self.rules_(), key=parent_name)
-        return [(p, clean(cs)) for p,cs in groupby(sr, parent_name)]
+        return [(p, clean(cs)) for p, cs in groupby(sr, parent_name)]
 
     def rules(self):
         return dict(self.rules__())
 
     def bnf(self):
-        symbolify   = lambda    s: '<%s>' % s
-        disjonctify = lambda    l: ' | '.join(l)
-        equallify   = lambda a, b: " ::= ".join([a,b])
-        nl          = "\n"
-        # return {symbolify(p): disjonctify(map(symbolify,cs)) for p,cs in self.rules().items()}
-        return nl.join([equallify(symbolify(p),disjonctify(map(symbolify,cs)))
-                        for p,cs
+        symbolify = lambda s: '<%s>' % s
+        disjonctify = lambda l: ' | '.join(l)
+        equalify = lambda a, b: " ::= ".join([a, b])
+        nl = "\n"
+        # return {symbolify(p): disjonctify(map(symbolify,cs))
+        #  for p,cs in self.rules().items()}
+        return nl.join([equalify(symbolify(p), disjonctify(map(symbolify, cs)))
+                        for p, cs
                         in self.rules().items()])
+
 
 class IRandomTree(object):
     """Random tree generator, with some constraints.
@@ -108,7 +112,7 @@ class IRandomTree(object):
        ```
        if (d > 0):
          d' = d - 1
-         gen(T, d) -> Tree(next T, gen T d', gen T d') 
+         gen(T, d) -> Tree(next T, gen T d', gen T d')
        else:
          gen(T, d) -> None
        ```
@@ -120,16 +124,14 @@ class IRandomTree(object):
 
     def __init__(self, depth=18):
         """
-        
+
         Arguments:
         - `depth`: maximum depth of the generated tree
         """
         self._depth = depth
 
-    def generate(self):
-        """
-        """
-        pass
+    def generate(self): pass
+
 
 class RandomTree(IRandomTree):
     """
@@ -145,7 +147,7 @@ class RandomTree(IRandomTree):
                            "h3", "code",
                            "img", "audio",
                            "video", "script"])
-        
+
     def generate(self, d):
         """
         """
@@ -155,8 +157,8 @@ class RandomTree(IRandomTree):
             return Gree(t, self.generate(dn), self.generate(dn))
         else:
             return None
-        
-### Tests
+
+# Tests
 
 t0 = Gree('body',
           Gree('div'),
@@ -198,25 +200,27 @@ g3 = Gree('body',
                     Gree('h2'),
                     Gree('a'))))
 
-### Main
+# Main
 
 if __name__ == "__main__":
 
-    print('Grammar infernce')
-    from pprint import pprint as pp
-    for tree in [t0,t1,t2,t3,g3]:
+    print('Grammar inference')
+
+    for tree in [t0, t1, t2, t3, g3]:
         print('@Source')
         print(tree)
         print('@Grammar')
         print(tree.bnf())
 
     print('Random tree generation')
+
     tags = ["a", "pre", "div", "span",
             "h1", "h2", "h3", "code",
             "img", "audio", "video", "script"]
+
     count = 5                   # number of trees
     depth = 10                  # trees of depth <= 10
     trees = [RandomTree().generate(depth) for i in range(count)]
-    for num,tree in enumerate(trees):
-        print("Tree",num)
+    for num, tree in enumerate(trees):
+        print("Tree", num)
         print(tree.bnf())
