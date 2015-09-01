@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+'''
+Grammarize
+
+Implements grammatical rules inference from Tree -> Grammar
+Also contains a random Tree generator (depth bound).
+'''
+
+
 from itertools import groupby, cycle
 from prelude import flatten, isnt
 
@@ -135,10 +143,12 @@ class IRandomTree(object):
 
 class RandomTree(IRandomTree):
     """
+    Generate a ~random tree from built-in tag list self.tags.
     """
 
     def __init__(self, ):
         """
+        Initializes built-in tag list.
         """
         super()
         self.tags = cycle(["a", "pre",
@@ -150,6 +160,7 @@ class RandomTree(IRandomTree):
 
     def generate(self, d):
         """
+        Simply depth bounded tree generation.
         """
         t = next(self.tags)
         if (d > 0):
