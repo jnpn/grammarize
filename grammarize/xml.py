@@ -18,12 +18,11 @@ class NaryTree(Tree):
             yield self
 
 
-class NaryGree(NaryTree, Gree):
-    def __init__(self, xmlnode):
-        self._x = XML(xmlnode)
+class NaryGree(XML, Gree):
 
-    def children(self):
-        return self._x.children()
+    def rules_(self):
+        return [(t.node(), t.children_names())
+                for t in self.walk()]
 
 
 class XML(NaryTree):
