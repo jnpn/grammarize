@@ -9,7 +9,7 @@ Also contains a random Tree generator (depth bound).
 
 
 from itertools import groupby, cycle
-from prelude import flatten, isnt
+from .prelude import flatten, isnt
 
 
 class Tree:

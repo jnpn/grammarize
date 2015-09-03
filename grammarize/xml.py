@@ -1,5 +1,4 @@
-from grammarize import Tree
-import rel as r
+from .grammarize import Tree
 
 class NaryTree(Tree):
     def left(self, ):
