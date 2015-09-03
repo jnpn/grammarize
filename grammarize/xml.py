@@ -18,40 +18,45 @@ class NaryTree(Tree):
             yield self
 
 
-class NaryGree(XML, Gree):
-
-    def rules_(self):
-        return [(t.node(), t.children_names())
-                for t in self.walk()]
-
-
 class XML(NaryTree):
     '''
     Pseudo lazy tree adapter.
     Wrap native xml tree.
     On access, return list of wrapped native children.
+
+    Warning: XML NaryTrees don't have leaves, since unnecessary
+    for grammar inference.
     '''
 
     def __init__(self, xmlnode):
         self.xmlnode = xmlnode
-        self._children = None
 
     def node(self):
-        return self.xmlnode.__class__.__name__
-
-    def isleaf(self):
-        return self.node() != 'Text' \
-                or self.node() != 'Comment' \
-                or self.node() != 'Inst' or \
-                self.node() != 'Doctype'
+        kind = self.xmlnode.__class__.__name__
+        if kind == 'Root':
+            return 'Document'
+        else:
+            def p(n):
+                import re
+                rx = r'<(?P<name>[^ ]+).*>'
+                return re.match(rx, n).groups('name')[0]
+            return p(self.xmlnode.name.decode('utf8').strip())
 
     def children(self):
-        if not self._children:
-            if self.node() == 'Root' or self.node() == 'Tag':
-                self._children = [XML(nc) for nc in self.xmlnode.children]
-            else:
-                self._children = []
-        return self._children
+        def is_xml_node(n):
+            k = n.__class__.__name__
+            return k == 'Root' or k == 'Tag'
+        return [XML(nc) for nc in self.xmlnode.children if is_xml_node(nc)]
 
     def children_names(self):
         return [c.node() for c in self.children()]
+
+    def __repr__(self):
+        return self.node()
+
+
+class NaryGree(XML, Gree):
+
+    def rules_(self):
+        return [(t.node(), t.children_names())
+                for t in self.walk()]
