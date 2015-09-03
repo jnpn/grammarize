@@ -1,4 +1,4 @@
-from .grammarize import Tree
+from .grammarize import Tree, Gree
 
 class NaryTree(Tree):
     def left(self, ):
@@ -16,6 +16,15 @@ class NaryTree(Tree):
             for c in self.children():
                 yield from c.walk()
             yield self
+
+
+class NaryGree(NaryTree, Gree):
+    def __init__(self, xmlnode):
+        self._x = XML(xmlnode)
+
+    def children(self):
+        return self._x.children()
+
 
 class XML(NaryTree):
     '''
