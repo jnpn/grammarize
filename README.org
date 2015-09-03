@@ -1,0 +1,45 @@
+* Grammarize
+
+Turns a tree into grammar rules.
+
+Simply walks the tree and gather descendancy relationships, then
+grouped by parent to form a descriptive grammar. (pompous)
+
+* Example
+
+```
+@>>> print(opendocument.bnf())
+<office:font-face-decls> ::= <style:font-face>
+<style:table-row-properties> ::=
+<office:text> ::= <text:p> | <text:sequence-decls> | <table:table> | <office:forms>
+<style:paragraph-properties> ::=
+<style:table-properties> ::=
+<office:document-content> ::= <office:scripts/> | <office:body> | <office:font-face-decls> \
+			    | <office:automatic-styles>
+<style:text-properties> ::=
+<table:table-row> ::= <table:table-cell> | <table:covered-table-cell/>
+<table:table> ::= <table:table-column> | <table:table-row>
+<style:style> ::= <style:table-row-properties> | <style:table-properties> | <style:table-column-properties> \
+	        | <style:text-properties> | <style:table-cell-properties> | <style:paragraph-properties>
+<office:scripts/> ::=
+<text:sequence-decls> ::= <text:sequence-decl>
+<office:forms> ::=
+<Document> ::= <office:document-content>
+<style:font-face> ::=
+<style:table-column-properties> ::=
+<style:table-cell-properties> ::=
+<office:automatic-styles> ::= <style:style>
+<table:table-cell> ::= <text:p>
+<text:sequence-decl> ::=
+<table:table-column> ::=
+<text:span> ::= <text:span>
+<office:body> ::= <office:text>
+<table:covered-table-cell/> ::=
+<text:p> ::= <text:span>
+```
+
+* Ideas and TODOS
+
+* POS order for rules.
+
+* useful test suite
