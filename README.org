@@ -1,45 +1,116 @@
 * Grammarize
 
-Turns a tree into grammar rules.
+  Turns a tree into grammar rules.
 
-Simply walks the tree and gather descendancy relationships, then
-grouped by parent to form a descriptive grammar. (pompous)
+  Simply walks the tree and gather descendancy relationships, then
+  grouped by parent to form a descriptive grammar. (pompous)
 
-* Example
+* DONE Example
 
-```
-@>>> print(opendocument.bnf())
-<office:font-face-decls> ::= <style:font-face>
-<style:table-row-properties> ::=
-<office:text> ::= <text:p> | <text:sequence-decls> | <table:table> | <office:forms>
-<style:paragraph-properties> ::=
-<style:table-properties> ::=
-<office:document-content> ::= <office:scripts/> | <office:body> | <office:font-face-decls> \
-			    | <office:automatic-styles>
-<style:text-properties> ::=
-<table:table-row> ::= <table:table-cell> | <table:covered-table-cell/>
-<table:table> ::= <table:table-column> | <table:table-row>
-<style:style> ::= <style:table-row-properties> | <style:table-properties> | <style:table-column-properties> \
-	        | <style:text-properties> | <style:table-cell-properties> | <style:paragraph-properties>
-<office:scripts/> ::=
-<text:sequence-decls> ::= <text:sequence-decl>
-<office:forms> ::=
-<Document> ::= <office:document-content>
-<style:font-face> ::=
-<style:table-column-properties> ::=
-<style:table-cell-properties> ::=
-<office:automatic-styles> ::= <style:style>
-<table:table-cell> ::= <text:p>
-<text:sequence-decl> ::=
-<table:table-column> ::=
-<text:span> ::= <text:span>
-<office:body> ::= <office:text>
-<table:covered-table-cell/> ::=
-<text:p> ::= <text:span>
-```
+  ```
+  @>>> print(opendocument.bnf())
+  <office:font-face-decls> ::= <style:font-face>
+  <style:table-row-properties> ::=
+  <office:text> ::= <text:p> | <text:sequence-decls> | <table:table> | <office:forms>
+  <style:paragraph-properties> ::=
+  <style:table-properties> ::=
+  <office:document-content> ::= <office:scripts/> | <office:body> | <office:font-face-decls> \
+			      | <office:automatic-styles>
+  <style:text-properties> ::=
+  <table:table-row> ::= <table:table-cell> | <table:covered-table-cell/>
+  <table:table> ::= <table:table-column> | <table:table-row>
+  <style:style> ::= <style:table-row-properties> | <style:table-properties> | <style:table-column-properties> \
+		  | <style:text-properties> | <style:table-cell-properties> | <style:paragraph-properties> |
+  <office:scripts/> ::=
+  <text:sequence-decls> ::= <text:sequence-decl>
+  <office:forms> ::=
+  <Document> ::= <office:document-content>
+  <style:font-face> ::=
+  <style:table-column-properties> ::=
+  <style:table-cell-properties> ::=
+  <office:automatic-styles> ::= <style:style>
+  <table:table-cell> ::= <text:p>
+  <text:sequence-decl> ::=
+  <table:table-column> ::=
+  <text:span> ::= <text:span>
+  <office:body> ::= <office:text>
+  <table:covered-table-cell/> ::=
+  <text:p> ::= <text:span>
+  ```
 
 * Ideas and TODOS
 
-* POS order for rules.
+** POS order for rules.
 
-* useful test suite
+** useful test suite
+
+** Grammar Diff
+
+   - new left nodes
+   - new right rules
+
+* DONE Can I prototype inside org-mode with modules ?
+
+  #+BEGIN_SRC python
+
+  import grammarize.grammarize as g
+
+  t = g.Tree('body',
+	     g.Tree('header',
+		    g.Tree('span', None, None),
+		    None),
+	     g.Tree('footer', None, None))
+  return list(t.walk())
+
+  #+END_SRC
+
+  #+RESULTS:
+  | Leaf | span   |                                |               |
+  | Tree | header | (Leaf span)                    | None          |
+  | Tree | body   | (Tree header (Leaf span) None) | (Leaf footer) |
+  | Leaf | footer |                                |               |
+
+* DONE Yes you can.
+
+* DONE Bnf
+
+  #+BEGIN_SRC python
+
+  from grammarize.grammarize import Gree
+
+  g = Gree('body',
+	   Gree('header', Gree('span', None, None), None),
+	   Gree('footer', Gree('span', None, None), None))
+
+  return g.bnf()
+
+  #+END_SRC
+
+  #+RESULTS:
+  : <header> ::= <span>
+  : <footer> ::= <span>
+  : <body> ::= <header> | <footer>
+
+* DONE OS data gathering
+
+  #+BEGIN_SRC bash
+
+  uname -a | sed 's, ,\n\n,g'
+
+  #+END_SRC
+
+  #+RESULTS:
+  | Linux        |
+  | x61s_GPT     |
+  | 4.1.6-1-ARCH |
+  | #1           |
+  | SMP          |
+  | PREEMPT      |
+  | Mon          |
+  | Aug          |
+  | 17           |
+  | 08:52:28     |
+  | CEST         |
+  | 2015         |
+  | x86_64       |
+  | GNU/Linux    |
