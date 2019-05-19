@@ -21,6 +21,7 @@ setup(
     classifiers=[],
     keywords='tree grammar xml bnf',
     packages={'grammarize': 'grammarize'},
+    test_suite=['tests.test_xml'],
     install_requires=[],
     extras_require={
         'dev': ['check-manifest'],
