@@ -1,23 +1,38 @@
-from grammarize.grammarize import RandomTree
+from grammarize.grammarize import RandomTree, Gree
 
 if __name__ == "__main__":
 
+    print()
     print('Grammar inference')
-    from tests.test_gree import t0, t1, t2, t3, g3
-    for tree in [t0, t1, t2, t3, g3]:
+    print('----')
+    # commented because I don't understand python import system properly
+    # from tests.test_gree import t0, t1, t2, t3, g3
+    # for tree in [t0, t1, t2, t3, g3]:
+    t = Gree('body',
+          Gree('pre'),
+          Gree('div',
+               Gree('p',
+                    Gree('h1'),
+                    Gree('span')),
+               Gree('p',
+                    Gree('h2'),
+                    Gree('a'))))
+    for tree in [t]:
         print('@Source')
         print(tree)
         print('@Grammar')
         print(tree.bnf())
 
+    print()
     print('Random tree generation')
+    print('----')
 
     tags = ["a", "pre", "div", "span",
             "h1", "h2", "h3", "code",
             "img", "audio", "video", "script"]
 
-    count = 5                   # number of trees
-    depth = 10                  # trees of depth <= 10
+    count = 1                   # number of trees
+    depth = 12                  # trees of depth <= 10
     trees = [RandomTree().generate(depth) for i in range(count)]
     for num, tree in enumerate(trees):
         print("Tree", num)
