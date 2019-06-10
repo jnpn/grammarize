@@ -2,8 +2,8 @@ from nose.tools import assert_equal
 
 from grammarize.xml import NaryGree
 
-from sax.saxg import root
-from sax.parserg import pp, xml as xmlb
+from sax.tokenizer.loop import tok as root
+from sax.parser.core import pp, xml as xmlb
 
 
 def test0():
