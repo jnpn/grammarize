@@ -7,7 +7,7 @@ from sax.parserg import pp, xml as xmlb
 
 
 def test0():
-    t = xmlb(root(open('./samples/cv.settings.xml', 'rb')))
+    t = xmlb(root(open('./samples/cv.settings.xml', 'r')))
     pp(t)
     ng = NaryGree(t)
     print(ng.bnf())
