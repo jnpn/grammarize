@@ -88,14 +88,6 @@ class Gree(Tree):
       - order rules by depth of first appearance
     """
 
-    def _rules(self):
-        g = Grouper()
-        for t in self.walk():
-            if not t.isleaf():
-                for c in t.children_names():
-                    g.add(t.node(),c)
-        return g.to_dict()
-
     def rules(self):
         g = G()
         for t in self.walk():
