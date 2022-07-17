@@ -81,6 +81,7 @@ class Gree(Tree):
     """
 
     def rules_(self):
+        """tree -> [(parent, [childrens])]"""
         return [(t.node(), t.children_names())
                 for t in self.walk()
                 if not t.isleaf()]
@@ -101,6 +102,9 @@ class Gree(Tree):
         return dict(self.rules__())
 
     def bnf(self):
+        """
+        pretty prints grammar rules in BNF forms.
+        """
         symbolify = lambda s: '<%s>' % s
         disjonctify = lambda l: ' | '.join(l)
         equalify = lambda a, b: " ::= ".join([a, b])
