@@ -27,10 +27,8 @@ def show_bnf(depth):
     print()
     print(grammar)
 
-def main():
-    cli()
-
-def old():
+@cli.command()
+def demo():
 
     print()
     print('Grammar inference')
@@ -65,4 +63,4 @@ def old():
         print(tree.bnf())
 
 if __name__ == "__main__":
-    main()
+    cli()
