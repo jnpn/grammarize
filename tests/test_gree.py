@@ -1,6 +1,5 @@
 from grammarize.grammarize import Gree
 
-
 t0 = Gree('body',
           Gree('div'),
           Gree('div'))

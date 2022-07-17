@@ -1,4 +1,5 @@
-from .grammarize import Tree, Gree
+from .grammarize import Gree, Tree
+
 
 class NaryTree(Tree):
     def left(self, ):
