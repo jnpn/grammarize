@@ -3,13 +3,34 @@ Grammarize CLI
 '''
 
 import click
+import rich.pretty as pp
 
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
+from grammarize.highlighters import ParensHighlighter, \
+    TagHighlighter, AssignHighlighter, GreeHighlighter
+
+from rich.console import Console
+from rich.theme import Theme
 
 @click.group('cli')
 def cli():
     pass
+
+theme = Theme({
+    "example.rpar": "bold magenta",
+    "example.lpar": "bold magenta",
+    "example.eq": "bold cyan",
+    "example.tag": "bold yellow",
+    "example.kind": "bold blue",
+    "example.lval": "bold green",
+    "example.rval": "bold green",
+})
+
+parcons = Console(highlighter=ParensHighlighter(), theme=theme)
+eqcons = Console(highlighter=AssignHighlighter(), theme=theme)
+tagcons = Console(highlighter=TagHighlighter(), theme=theme)
+greecons = Console(highlighter=GreeHighlighter(), theme=theme)
 
 @cli.command()
 @click.argument('depth', default=4, type=int)
@@ -25,7 +46,7 @@ def show_bnf(depth):
     print()
     tree.pp()
     print()
-    print(grammar)
+    eqcons.print(grammar)
 
 @cli.command()
 def demo():
@@ -47,7 +68,7 @@ def demo():
                     Gree('a'))))
     for tree in [t]:
         print('@Source')
-        print(tree)
+        greecons.print(tree)
         print('@Grammar')
         print(tree.bnf())
 
@@ -63,4 +84,5 @@ def demo():
         print(tree.bnf())
 
 if __name__ == "__main__":
+    parcons.print("Send funds to (johan.ponin.pro@gmail.com)")
     cli()
