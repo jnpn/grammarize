@@ -1,3 +1,7 @@
+'''
+Grammarize CLI
+'''
+
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
 
