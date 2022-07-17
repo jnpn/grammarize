@@ -105,8 +105,6 @@ class Gree(Tree):
         disjonctify = lambda l: ' | '.join(l)
         equalify = lambda a, b: " ::= ".join([a, b])
         nl = "\n"
-        # return {symbolify(p): disjonctify(map(symbolify,cs))
-        #  for p,cs in self.rules().items()}
         return nl.join([equalify(symbolify(p), disjonctify(map(symbolify, cs)))
                         for p, cs
                         in self.rules().items()])
