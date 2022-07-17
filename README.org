@@ -5,19 +5,69 @@ Turns a tree into grammar rules.
 Simply walks the tree and gather descendancy relationships, then
 grouped by parent to form a descriptive grammar. (pompous)
 
-* TODO Usage
+* Requirements
 
-  WARNING: non existent cli, working on it
+  - click
+  - sax [wip]
+
+* Usage
 
   use the following to run a simple test over binary trees
 
-  #+BEGIN_SRC bash
-  $ python main.py
+  #+BEGIN_SRC bash :results raw
+  python main.py gen-tree
   #+END_SRC
 
-* Example
+  #+RESULTS:
+  -  Gree a
+  -    Gree pre
+  -      Gree div
+  -        Gree span
+  -        Gree h3
+  -      Gree audio
+  -        Gree video
+  -        Gree pre
+  -    Gree h1
+  -      Gree h2
+  -        Gree h3
+  -        Gree audio
+  -      Gree a
+  -        Gree pre
+  -        Gree h1
+
+  #+BEGIN_SRC bash :results raw
+  python main.py show-bnf
+  #+END_SRC
+
+  #+RESULTS:
+
+  -  Gree a
+  -    Gree pre
+  -      Gree div
+  -        Gree span
+  -        Gree h3
+  -      Gree audio
+  -        Gree video
+  -        Gree pre
+  -    Gree h1
+  -      Gree h2
+  -        Gree h3
+  -        Gree audio
+  -      Gree a
+  -        Gree pre
+  -        Gree h1
+
+  <a> ::= <h1> | <pre>
+  <audio> ::= <video> | <pre>
+  <div> ::= <h3> | <span>
+  <h1> ::= <h2> | <a>
+  <h2> ::= <audio> | <h3>
+  <pre> ::= <audio> | <div>
+
+* OpenDocument Example
 
   #+BEGIN_SRC python
+
   @>>> print(opendocument.bnf())
   <office:font-face-decls> ::= <style:font-face>
   <style:table-row-properties> ::=
@@ -25,12 +75,12 @@ grouped by parent to form a descriptive grammar. (pompous)
   <style:paragraph-properties> ::=
   <style:table-properties> ::=
   <office:document-content> ::= <office:scripts/> | <office:body> | <office:font-face-decls> \
-  			    | <office:automatic-styles>
+                            | <office:automatic-styles>
   <style:text-properties> ::=
   <table:table-row> ::= <table:table-cell> | <table:covered-table-cell/>
   <table:table> ::= <table:table-column> | <table:table-row>
   <style:style> ::= <style:table-row-properties> | <style:table-properties> | <style:table-column-properties> \
-  	        | <style:text-properties> | <style:table-cell-properties> | <style:paragraph-properties>
+                | <style:text-properties> | <style:table-cell-properties> | <style:paragraph-properties>
   <office:scripts/> ::=
   <text:sequence-decls> ::= <text:sequence-decl>
   <office:forms> ::=
@@ -46,6 +96,7 @@ grouped by parent to form a descriptive grammar. (pompous)
   <office:body> ::= <office:text>
   <table:covered-table-cell/> ::=
   <text:p> ::= <text:span>
+
   #+END_SRC
 
 * TODOS
@@ -53,3 +104,7 @@ grouped by parent to form a descriptive grammar. (pompous)
 ** POS order for rules.
 
 ** useful test suite
+
+** fix rules_ rules__ logic
+
+  it's probably full of unnecessary steps
