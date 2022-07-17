@@ -116,28 +116,6 @@ class Gree(Tree):
                         for p, cs
                         in self.rules().items()])
 
-class Grouper:
-
-    def __init__(self):
-        self.d = {}
-
-    def add(self, k, v):
-        if k in self.d:
-            kset = self.d[k]
-            # only add if new
-            if v not in kset:
-                kset.add(v)
-        else:
-            self.d[k] = set([v])
-
-    def to_dict(self):
-        return self.d
-
-    def __repr__(self):
-        '''dict[A,set(B)] -> str'''
-        kvs = ', '.join(f'{k}:{s}' for k,s in self.d.items())
-        return f'<Grouper {kvs}>'
-
 class G(dict):
 
     '''Grouping dict key -> set(val).'''
