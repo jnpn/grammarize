@@ -106,8 +106,9 @@ class Gree(Tree):
                         in self.rules().items()])
 
 class G(dict):
-
-    '''Grouping dict key -> set(val).'''
+    '''
+    Grouping dict key -> set(val).
+    '''
 
     def __setitem__(self, k, v):
         if k in self:
