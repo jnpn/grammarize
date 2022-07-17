@@ -97,11 +97,9 @@ class Gree(Tree):
         """
         pretty prints grammar rules in BNF forms.
         """
-        symbolify = lambda s: f'<{s}>'
-        disjonctify = ' | '.join
-        equalify = lambda a, b: " ::= ".join([a, b])
         nl = "\n"
-        return nl.join([equalify(symbolify(p), disjonctify(map(symbolify, cs)))
+        disjonctify = ' | '.join
+        return nl.join([f'<{p}>' + " ::= " + disjonctify(f'<{c}>' for c in cs)
                         for p, cs
                         in self.rules().items()])
 
