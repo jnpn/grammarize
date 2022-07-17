@@ -103,6 +103,7 @@ class Gree(Tree):
                         for p, cs
                         in self.rules().items()])
 
+
 class G(dict):
     '''
     Grouping dict key -> set(val).
