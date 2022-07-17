@@ -107,10 +107,11 @@ grouped by parent to form a descriptive grammar. (pompous)
 
 * TODOS
 
-** POS order for rules.
-
-** useful test suite
-
-** fix rules_ rules__ logic
+** DONE fix rules_ rules__ logic
 
   it's probably full of unnecessary steps
+
+** WIP useful test suite
+
+** POS order for rules.
+
