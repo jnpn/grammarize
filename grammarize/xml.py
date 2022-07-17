@@ -1,4 +1,9 @@
-from .grammarize import Tree, Gree
+'''
+XML-like trees adapters.
+'''
+
+from .grammarize import Gree, Tree
+
 
 class NaryTree(Tree):
     def left(self, ):

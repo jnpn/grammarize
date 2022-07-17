@@ -1,9 +1,9 @@
 from nose.tools import assert_equal
+from sax.parser.core import pp
+from sax.parser.core import xml as xmlb
+from sax.tokenizer.loop import tok as root
 
 from grammarize.xml import NaryGree
-
-from sax.tokenizer.loop import tok as root
-from sax.parser.core import pp, xml as xmlb
 
 
 def test0():

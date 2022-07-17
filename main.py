@@ -1,6 +1,36 @@
-from grammarize.grammarize import RandomTree, Gree
+'''
+Grammarize CLI
+'''
 
-if __name__ == "__main__":
+from grammarize.grammarize import Gree
+from grammarize.random_tree import RandomTree
+
+import click
+
+@click.group('cli')
+def cli():
+    pass
+
+@cli.command()
+@click.argument('depth', default=4, type=int)
+def gen_tree(depth):
+    tree = RandomTree().generate(depth)
+    tree.pp()
+
+@cli.command()
+@click.argument('depth', default=4, type=int)
+def show_bnf(depth):
+    tree = RandomTree().generate(depth)
+    grammar = tree.bnf()
+    print()
+    tree.pp()
+    print()
+    print(grammar)
+
+def main():
+    cli()
+
+def old():
 
     print()
     print('Grammar inference')
@@ -37,3 +67,6 @@ if __name__ == "__main__":
     for num, tree in enumerate(trees):
         print("Tree", num)
         print(tree.bnf())
+
+if __name__ == "__main__":
+    main()
