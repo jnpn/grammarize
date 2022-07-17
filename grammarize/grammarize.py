@@ -54,6 +54,14 @@ class Tree:
         else:
             return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
 
+    def pp(self, prefix='-', indenter=' ', indentation=1, step=2):
+        '''pretty printer'''
+        print(prefix + indenter * indentation, self.__class__.__name__, self.node())
+        if self.left():
+            self.left().pp(indentation=indentation + step)
+        if self.right():
+            self.right().pp(indentation=indentation + step)
+
     def walk(self):
         """
         Tree -> [Tree]
