@@ -148,5 +148,4 @@ class G(dict):
             if v not in kset:
                 kset.add(v)
         else:
-            print('debug', k, v)
             super().__setitem__(k, set([v]))
