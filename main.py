@@ -1,7 +1,7 @@
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
 
-if __name__ == "__main__":
+def main():
 
     print()
     print('Grammar inference')
@@ -38,3 +38,6 @@ if __name__ == "__main__":
     for num, tree in enumerate(trees):
         print("Tree", num)
         print(tree.bnf())
+
+if __name__ == "__main__":
+    main()
