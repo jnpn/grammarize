@@ -7,15 +7,18 @@ import click
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
 
+
 @click.group('cli')
 def cli():
     pass
+
 
 @cli.command()
 @click.argument('depth', default=4, type=int)
 def gen_tree(depth):
     tree = RandomTree().generate(depth)
     tree.pp()
+
 
 @cli.command()
 @click.argument('depth', default=4, type=int)
@@ -27,6 +30,7 @@ def show_bnf(depth):
     print()
     print(grammar)
 
+
 @cli.command()
 def demo():
 
@@ -37,14 +41,14 @@ def demo():
     # from tests.test_gree import t0, t1, t2, t3, g3
     # for tree in [t0, t1, t2, t3, g3]:
     t = Gree('body',
-          Gree('pre'),
-          Gree('div',
-               Gree('p',
-                    Gree('h1'),
-                    Gree('span')),
-               Gree('p',
-                    Gree('h2'),
-                    Gree('a'))))
+             Gree('pre'),
+             Gree('div',
+                  Gree('p',
+                       Gree('h1'),
+                       Gree('span')),
+                  Gree('p',
+                       Gree('h2'),
+                       Gree('a'))))
     for tree in [t]:
         print('@Source')
         print(tree)
@@ -61,6 +65,7 @@ def demo():
     for num, tree in enumerate(trees):
         print("Tree", num)
         print(tree.bnf())
+
 
 if __name__ == "__main__":
     cli()
