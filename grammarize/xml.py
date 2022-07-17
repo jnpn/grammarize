@@ -1,3 +1,7 @@
+'''
+XML-like trees adapters.
+'''
+
 from .grammarize import Gree, Tree
 
 
