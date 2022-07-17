@@ -53,7 +53,8 @@ class Tree:
 
     def pp(self, prefix='-', indenter=' ', indentation=1, step=2):
         '''pretty printer'''
-        print(prefix + indenter * indentation, self.__class__.__name__, self.node())
+        indent = prefix + indenter * indentation
+        print(indent, self.__class__.__name__, self.node())
         if self.left():
             self.left().pp(indentation=indentation + step)
         if self.right():
