@@ -143,3 +143,15 @@ class Grouper:
         kvs = ', '.join(f'{k}:{s}' for k,s in self.d.items())
         return f'<Grouper {kvs}>'
 
+class G(dict):
+
+    '''Grouping dict key -> set(val).'''
+
+    def __setitem__(self, k, v):
+        if k in self:
+            kset = self[k]
+            if v not in kset:
+                kset.add(v)
+        else:
+            print('debug', k, v)
+            super().__setitem__(k, set([v]))
