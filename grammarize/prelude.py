@@ -28,3 +28,14 @@ def shuffler(a):
     n = len(a)
     while True:
         yield a[math.floor(random()*n-1)]
+
+def listify(e):
+    return [e]
+
+def maybe(v, f, p, d):
+    '''only compute f(v) if p(v) otherwise return d[efault]'''
+    return f(v) if p(v) else d
+
+def mayli(v, f):
+    '''maybe over lists'''
+    return maybe(v, f, isnt(None), [])
