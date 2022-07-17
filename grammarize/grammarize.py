@@ -5,9 +5,7 @@ Implements grammatical rules inference from Tree -> Grammar
 '''
 
 
-from itertools import groupby
-
-from .prelude import flatten, isnt, mayli, listify
+from .prelude import isnt, listify, mayli
 
 
 class Tree:
