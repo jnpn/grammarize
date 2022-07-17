@@ -88,26 +88,21 @@ class Gree(Tree):
       - order rules by depth of first appearance
     """
 
-    def rules_(self):
-        """tree -> [(parent, [childrens])]"""
-        return [(t.node(), t.children_names())
-                for t in self.walk()
-                if not t.isleaf()]
-
-    def rules__(self):
-        def clean(l):
-            """[(tag, [subtag])] -> Union [subtag]"""
-            return set(flatten([s for e, s in l]))
-        parent_name = lambda t: t[0]
-        # @INFO: groupby is order sensitive
-        # groupby a e b e != groupby a b e e
-        # Tree.walk traversal order exposed
-        # the need for sorting
-        sr = sorted(self.rules_(), key=parent_name)
-        return [(p, clean(cs)) for p, cs in groupby(sr, parent_name)]
+    def _rules(self):
+        g = Grouper()
+        for t in self.walk():
+            if not t.isleaf():
+                for c in t.children_names():
+                    g.add(t.node(),c)
+        return g.to_dict()
 
     def rules(self):
-        return dict(self.rules__())
+        g = G()
+        for t in self.walk():
+            if not t.isleaf():
+                for c in t.children_names():
+                    g[t.node()] = c
+        return g
 
     def bnf(self):
         """
