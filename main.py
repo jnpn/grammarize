@@ -1,7 +1,7 @@
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
 
-def main():
+def old():
 
     print()
     print('Grammar inference')
