@@ -12,7 +12,9 @@ grouped by parent to form a descriptive grammar. (pompous)
 
 * Usage
 
-  use the following to run a simple test over binary trees
+** generate a tree
+
+  gen-tree uses a html tag subset and a default depth of 4.
 
   #+BEGIN_SRC bash :results raw
   python main.py gen-tree
@@ -34,6 +36,10 @@ grouped by parent to form a descriptive grammar. (pompous)
   -      Gree a
   -        Gree pre
   -        Gree h1
+
+** show bnf
+
+  show-bnf generates a tree (see above) and then computes its BNF.
 
   #+BEGIN_SRC bash :results raw
   python main.py show-bnf
