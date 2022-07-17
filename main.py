@@ -1,4 +1,5 @@
-from grammarize.grammarize import RandomTree, Gree
+from grammarize.grammarize import Gree
+from grammarize.random_tree import RandomTree
 
 if __name__ == "__main__":
 
