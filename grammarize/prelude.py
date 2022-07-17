@@ -1,3 +1,4 @@
+'''prelude: basic functional functions'''
 
 def identity(v):
     return v
