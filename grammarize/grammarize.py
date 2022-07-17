@@ -43,9 +43,8 @@ class Tree:
 
     def __repr__(self):
         if self.isleaf():
-            return '(Leaf %s)' % (self.node())
-        else:
-            return '(Tree %s %s %s)' % (self.node(), self.left(), self.right())
+            return f'(Leaf {self.node()})'
+        return f'(Tree {self.node()} {self.left()} {self.right()})'
 
     def pp(self, prefix='-', indenter=' ', indentation=1, step=2):
         '''pretty printer'''
@@ -93,8 +92,8 @@ class Gree(Tree):
         """
         pretty prints grammar rules in BNF forms.
         """
-        symbolify = lambda s: '<%s>' % s
-        disjonctify = lambda l: ' | '.join(l)
+        symbolify = lambda s: f'<{s}>'
+        disjonctify = ' | '.join
         equalify = lambda a, b: " ::= ".join([a, b])
         nl = "\n"
         return nl.join([equalify(symbolify(p), disjonctify(map(symbolify, cs)))

@@ -1,5 +1,8 @@
 '''prelude: basic functional functions'''
 
+import math
+from random import random
+
 def identity(v):
     return v
 

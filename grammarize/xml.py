@@ -2,6 +2,8 @@
 XML-like trees adapters.
 '''
 
+import re
+
 from .grammarize import Gree, Tree
 
 
@@ -42,16 +44,15 @@ class XML(NaryTree):
             return 'Document'
         else:
             def p(n):
-                import re
                 rx = r'<(?P<name>[^ ]+).*>'
                 return re.match(rx, n).groups('name')[0]
             n = self.xmlnode.name
-            return p(n) if type(n) is str else p(n.decode('utf8').strip())
+            return p(n) if isinstance(n, str) else p(n.decode('utf8').strip())
 
     def children(self):
         def is_xml_node(n):
             k = n.__class__.__name__
-            return k == 'Root' or k == 'Tag'
+            return k in ['Root', 'Tag']
         return [XML(nc) for nc in self.xmlnode.children if is_xml_node(nc)]
 
     def children_names(self):

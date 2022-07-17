@@ -2,10 +2,10 @@
 Grammarize CLI
 '''
 
+import click
+
 from grammarize.grammarize import Gree
 from grammarize.random_tree import RandomTree
-
-import click
 
 @click.group('cli')
 def cli():
@@ -56,10 +56,6 @@ def old():
     print()
     print('Random tree generation')
     print('----')
-
-    tags = ["a", "pre", "div", "span",
-            "h1", "h2", "h3", "code",
-            "img", "audio", "video", "script"]
 
     count = 1                   # number of trees
     depth = 12                  # trees of depth <= 10

@@ -7,7 +7,7 @@ from itertools import cycle
 from grammarize.grammarize import Gree
 
 
-class IRandomTree(object):
+class IRandomTree:
     """Random tree generator, with some constraints.
          - T stream of tags, fixed iterable or generator
        ```
@@ -31,7 +31,7 @@ class IRandomTree(object):
         """
         self._depth = depth
 
-    def generate(self):
+    def generate(self, d):
         pass
 
 
@@ -40,11 +40,11 @@ class RandomTree(IRandomTree):
     Generate a ~random tree from built-in tag list self.tags.
     """
 
-    def __init__(self, ):
+    def __init__(self):
         """
         Initializes built-in tag list.
         """
-        super()
+        super().__init__()
         self.tags = cycle(["a", "pre",
                            "div", "span",
                            "h1", "h2",
@@ -57,8 +57,8 @@ class RandomTree(IRandomTree):
         Simply depth bounded tree generation.
         """
         t = next(self.tags)
-        if (d > 0):
+        if d > 0:
             dn = d - 1
             return Gree(t, self.generate(dn), self.generate(dn))
-        else:
-            return None
+
+        return None
