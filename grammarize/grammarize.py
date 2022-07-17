@@ -46,6 +46,11 @@ class Tree:
             return f'(Leaf {self.node()})'
         return f'(Tree {self.node()} {self.left()} {self.right()})'
 
+    def __eq__(self, other):
+        return self.node() == other.node() \
+            and self.left() == other.left() \
+            and self.right() == other.right()
+
     def pp(self, prefix='-', indenter=' ', indentation=1, step=2):
         '''pretty printer'''
         print(prefix + indenter * indentation, self.__class__.__name__, self.node())
